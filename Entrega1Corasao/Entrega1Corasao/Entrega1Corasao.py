@@ -1,1 +1,1 @@
-print("sexe Ja siusplau")
+print("sexe Ja siusplau: LITERAL")
