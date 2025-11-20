@@ -23,6 +23,7 @@
   <ItemGroup>
     <Compile Include="Entrega1Corasao.py" />
     <Compile Include="entrega1Grs.py" />
+    <Compile Include="entrega1Mar.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
