@@ -2,10 +2,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-N_v = 100        # mida del vector (exemple)
-Tc = 36.5      
-DeltaT = 0.00025    
-alpha = 1/0.00025     
+K=0.56 
+c_v=3686
+ro=1081
+V=40
+sigma=0.472
+T_0=1
+
+t_adim=2*T_0*c_v*ro/(sigma*V**2)
+l_adim=K*t_adim/(c_v*ro)
+
+N_v = 100        # mida del vector (la matriu és 100x100)
+Tc = 36.5   
+DeltaX=0.02/l_adim
+DeltaT = 0.5*DeltaX**2
+alpha = DeltaT/(DeltaX)**2
+
 
 for i in range(1,101):#va de 1 fins a 100
 
