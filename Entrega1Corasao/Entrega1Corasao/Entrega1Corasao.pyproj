@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bb979d29-8e63-49be-aa34-8bcc688fea00</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Entrega1Corasao.py</StartupFile>
+    <StartupFile>entrega1Grs.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
