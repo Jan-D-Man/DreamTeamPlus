@@ -12,7 +12,7 @@ T_0=1
 t_adim=2*T_0*c_v*ro/(sigma*V**2)
 l_adim=K*t_adim/(c_v*ro)
 
-N_v = 100        # mida del vector (la matriu és 100x100)
+N_v = 100        # mida del vector (la matriu ï¿½s 100x100)
 Tc = 36.5   
 DeltaX=0.02/l_adim
 DeltaT = 0.5*DeltaX**2
@@ -25,19 +25,19 @@ for i in range(1,101):#va de 1 fins a 100
 
     # j = 1 i j = N-2 en Python (posicions especials)
     b[0]    = Tc + DeltaT + alpha * Tc      # j = 1
-    b[N_v-1]  = Tc + DeltaT + alpha * Tc      # j = N-1 Aquí sí que puc dir que acaba en N_v-1 perquè he dit que N_v és 100
+    b[N_v-1]  = Tc + DeltaT + alpha * Tc      # j = N-1 Aquï¿½ sï¿½ que puc dir que acaba en N_v-1 perquï¿½ he dit que N_v ï¿½s 100
 
     # j = 2 fins a N-2  -> Python: 1 fins a N-2
     b[1:N_v-1] = Tc + DeltaT
 
-    # Matriu tridiagonal A, com és simètric la construïm així
-    diagonal   = (1 + 2*alpha) * np.ones(N_v) #diagonal -> np.ones ens construeix un vector de dimensió N_v amb tot 1 
-    adalt  = (-alpha) * np.ones(N_v - 1) #´diagonal' de dalt i abaix 
+    # Matriu tridiagonal A, com ï¿½s simï¿½tric la construï¿½m aixï¿½
+    diagonal   = (1 + 2*alpha) * np.ones(N_v) #diagonal -> np.ones ens construeix un vector de dimensiï¿½ N_v amb tot 1 
+    adalt  = (-alpha) * np.ones(N_v - 1) #ï¿½diagonal' de dalt i abaix 
     abaix  = (-alpha) * np.ones(N_v - 1)
 
-    A = np.diag(diagonal) + np.diag(adalt, 1) + np.diag(abaix, -1) #construïm A
+    A = np.diag(diagonal) + np.diag(adalt, 1) + np.diag(abaix, -1) #construï¿½m A
 
-    # Solució del sistema
+    # Soluciï¿½ del sistema
     x = np.linalg.solve(A, b)
 
     inicial_final=np.zeros(N_v)
