@@ -40,7 +40,11 @@ for i in range(1,101):#va de 1 fins a 100
     # Solució del sistema
     x = np.linalg.solve(A, b)
 
-    b=x+np.ones(N_v)*(DeltaT+i*DeltaT+alpha*Tc)
+    inicial_final=np.zeros(N_v)
+    inicial_final[0]=alpha*Tc
+    inicial_final[-1]=alpha*Tc
+
+    b=x+np.ones(N_v)*DeltaT+inicial_final
 
 print(x)
 
