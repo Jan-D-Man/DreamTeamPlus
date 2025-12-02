@@ -1,12 +1,26 @@
-import numpy as np
+﻿import numpy as np
+import matplotlib.pyplot as plt
+import math
 
-K = 1
-Tc = 36.5
-dt = 0.1
+K=0.56 
+c_v=3686
+ro=1081
+V=40
+sigma=0.472
+T_0=1
 
-Xmax = 10
-tmax = 20
-dX = 0.1
+t_adim=2*T_0*c_v*ro/(sigma*V**2)
+l_adim=K*t_adim/(c_v*ro)
+
+N_v = 100        # mida del vector (la matriu �s 100x100)
+Tc = 36.5   
+dX=0.02/l_adim
+dt = 0.5*dX**2
+gamma = dt/(dX)**2
+
+Xmax = 100
+tmax = 200
+
 T01 = Tc
 T00 = Tc
 T0m1 = Tc
@@ -39,4 +53,22 @@ def tempEulExp(T0m1, T00, T01, dt, dX):
         Tdef[:, 0] = Tc
     return Tdef
 
-print(tempEulExp(T0m1, T00, T01, dt, dX))
+def jacknicholson(T0m1, T00, T01,gamma):
+    diagonal   = (1 + 2*gamma) * np.ones(N_v) #diagonal -> np.ones ens construeix un vector de dimensi� N_v amb tot 1 
+    adalt  = (-gamma) * np.ones(N_v - 1) #�diagonal' de dalt i abaix 
+    abaix  = (-gamma) * np.ones(N_v - 1)
+
+    A = np.diag(diagonal) + np.diag(adalt, 1) + np.diag(abaix, -1) #constru�m A
+
+    diagonal   = (1 - 2*gamma) * np.ones(N_v) #diagonal -> np.ones ens construeix un vector de dimensi� N_v amb tot 1 
+    adalt  = (gamma) * np.ones(N_v - 1) #�diagonal' de dalt i abaix 
+    abaix  = (gamma) * np.ones(N_v - 1)
+
+    B = np.diag(diagonal) + np.diag(adalt, 1) + np.diag(abaix, -1) #constru�m B
+
+
+    pass
+
+
+
+print(jacknicholson(T0m1, T00, T01, gamma))
