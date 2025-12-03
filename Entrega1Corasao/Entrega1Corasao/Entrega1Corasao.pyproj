@@ -4,7 +4,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bb979d29-8e63-49be-aa34-8bcc688fea00</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>cranc_error.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,10 +22,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="cranc_error.py" />
     <Compile Include="Entrega1Corasao.py" />
     <Compile Include="entrega1Grs.py" />
     <Compile Include="entrega1MarTA.py" />
+    <Compile Include="Entrega_definitiva.py" />
     <Compile Include="No_hi_ha_res.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
