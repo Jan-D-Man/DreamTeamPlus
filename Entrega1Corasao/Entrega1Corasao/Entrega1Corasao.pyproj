@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bb979d29-8e63-49be-aa34-8bcc688fea00</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>entrega1Grs.py</StartupFile>
+    <StartupFile>Entrega1Corasao.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,6 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Entrega1Sexedur.py" />
     <Compile Include="Entrega1Corasao.py" />
     <Compile Include="entrega1Grs.py" />
     <Compile Include="entrega1MarTA.py" />

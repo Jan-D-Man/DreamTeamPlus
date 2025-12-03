@@ -9,7 +9,7 @@ V=40
 sigma=0.472
 T_0=1
 
-t_adim=2*T_0*c_v*ro/(sigma*V**2)
+t_adim=2*T_0*c_v*ro/(sigma*V**2)    
 l_adim=K*t_adim/(c_v*ro)
 
 N_v = 100        # mida del vector (la matriu �s 100x100)
