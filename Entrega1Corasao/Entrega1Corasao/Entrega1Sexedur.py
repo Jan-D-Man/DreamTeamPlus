@@ -47,9 +47,12 @@ B = np.diag(diagonal_2) + np.diag(adalt_2, 1) + np.diag(abaix_2, -1) #construïm
 
 d=np.ones(N_v-1)*Tc_norm
 
+temps = []
+
 for i in range(0,500):
     # Soluci� del sistema
     T=Ainv@B@d+Ainv@c
+    temps.append(T)
     d=T
 
 print(Ainv@A)
@@ -57,6 +60,20 @@ print(Ainv@A)
 punts=np.linspace(0,0.02,99)
 
 plt.plot(punts,T*T_0)
+plt.show()
+temps = np.array(temps)
+
+plt.figure(figsize=(8,5))
+plt.imshow(temps * T_0, 
+           extent=[0, 0.02, 0, 500], 
+           aspect='auto', 
+           origin='lower', 
+           cmap='hot')
+
+plt.colorbar(label='Temperatura (°C)')
+plt.xlabel('Posició (m)')
+plt.ylabel('Passos de temps')
+plt.title('Mapa de calor de l’evolució de temperatura')
 plt.show()
 
 #CAS 2

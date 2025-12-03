@@ -61,6 +61,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+from matplotlib.animation import FuncAnimation
+
 
 K=0.56
 c_v=3686
@@ -122,6 +124,67 @@ plt.xlabel('Posició (m)')
 plt.ylabel('Passos de temps')
 plt.title('Mapa de calor de l’evolució de temperatura')
 plt.show()
+
+fig, ax = plt.subplots()
+
+# línia inicial (temps 0)
+linea, = ax.plot(punts, temps[0] * T_0)
+
+ax.set_xlim(0, 0.02)
+ax.set_ylim((temps*T_0).min()*0.9, (temps*T_0).max()*1.1)
+ax.set_xlabel("Posició (m)")
+ax.set_ylabel("Temperatura (°C)")
+
+def init():
+    """Configura el primer frame"""
+    linea.set_ydata(temps[0] * T_0)
+    ax.set_title("t = 0.0 s")
+    return linea,
+
+def update(frame):
+    """Actualitza la línia a cada pas de temps"""
+    T_actual = temps[frame] * T_0
+    linea.set_ydata(T_actual)
+    t_real = frame * DeltaT * t_0   # si vols temps físic
+    ax.set_title(f"t = {t_real:.2f} s")
+    return linea,
+
+ani = FuncAnimation(
+    fig,
+    update,
+    frames=len(temps),
+    init_func=init,
+    blit=True,
+    interval=50   # ms entre frames (canvia-ho per fer-la més ràpida/lenta)
+)
+
+plt.show()
+t=0.025
+
+def sol_anal(x_i):
+    n = np.arange(1, 10**3)
+    return Tc_norm + np.sum(
+    (2/(n*np.pi)) * (1 - (-1)**n) *
+    ((1 - np.exp(-n**2 * np.pi**2 * t)) / (np.pi**2 * n**2)) *np.sin(n*np.pi*x_i) )
+
+T_anal = []
+
+pos=np.linspace(0.01,0.99,99)
+
+for posi in pos:
+    T_anal.append(sol_anal(posi))
+
+Error=[]
+
+for i in range(99):
+    Error.append(np.abs(T_anal[i]-T[i]))
+
+print(Error)
+
+plt.plot(pos,Error)
+plt.show()
+
+
 #CAS 2
 
 # DeltaT = 0.5*DeltaX**2
