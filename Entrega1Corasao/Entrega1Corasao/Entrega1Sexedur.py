@@ -76,7 +76,3 @@ plt.ylabel('Passos de temps')
 plt.title('Mapa de calor de l’evolució de temperatura')
 plt.show()
 
-#CAS 2
-
-# DeltaT = 0.5*DeltaX**2
-# alpha = DeltaT/(DeltaX)**2
