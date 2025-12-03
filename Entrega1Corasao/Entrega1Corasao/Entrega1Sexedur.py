@@ -59,7 +59,3 @@ punts=np.linspace(0,0.02,99)
 plt.plot(punts,T*T_0)
 plt.show()
 
-#CAS 2
-
-# DeltaT = 0.5*DeltaX**2
-# alpha = DeltaT/(DeltaX)**2
