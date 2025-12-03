@@ -76,3 +76,30 @@ plt.ylabel('Passos de temps')
 plt.title('Mapa de calor de l’evolució de temperatura')
 plt.show()
 
+#SOLUCIÓ ANALÍTICA
+
+t=0.025
+
+def sol_anal(x_i):
+    n = np.arange(1, 10**3)
+    return Tc_norm + np.sum(
+    (2/(n*np.pi)) * (1 - (-1)**n) *
+    ((1 - np.exp(-n**2 * np.pi**2 * t)) / (np.pi**2 * n**2)) *
+    np.sin(n*np.pi*x_i) ) 
+
+T_anal = []
+
+pos=np.linspace(0.01,0.99,99)
+
+for posi in pos:
+    T_anal.append(sol_anal(posi))
+
+Error=[]
+
+for i in range(99):
+    Error.append(np.abs(T_anal[i]-T[i]))
+
+print(Error)
+
+plt.plot(pos,Error)
+plt.show()
