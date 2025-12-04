@@ -111,7 +111,7 @@ for par in pari:
 fig_err, ax_err = plt.subplots(figsize=(8,5))
 ax_err.plot(pos, Error_tres[2], label='$ΔT=0,25·ΔX^2$', linewidth=2)
 ax_err.plot(pos, Error_tres[0], label='$ΔT=0,49·ΔX^2$', linewidth=2)
-#ax_err.plot(pos, Error_tres[1], label='$ΔT=0,51·ΔX^2$', linewidth=2)
+ax_err.plot(pos, Error_tres[1], label='$ΔT=0,51·ΔX^2$', linewidth=2)
 
 
 

@@ -81,9 +81,9 @@ def euler_explicit(par):
     plt.title('Mapa de calor de l’evolució de temperatura')
     plt.show()
 
+    #ANIMACIÓ
+    #preparo figura per fer animació
     fig2, ax2 = plt.subplots(figsize=(8, 3))
-
-# Rang dinàmic més sensible
     all_vals = temps * T_0
     vmin = np.percentile(all_vals, 1)
     vmax = np.percentile(all_vals, 99)
@@ -91,7 +91,7 @@ def euler_explicit(par):
     # Primera fila (temps = 0)
     data0 = all_vals[0][np.newaxis, :]
 
-    # Heatmap inicial
+    # faig mapa de calor inicial
     img = ax2.imshow(
         data0,
         extent=[0, 0.02, 0, 1],
@@ -102,28 +102,26 @@ def euler_explicit(par):
         vmax=vmax
     )
 
-    # Colorbar
+    # Definim els colors que tindrà el mapa segons la temperatura
     cbar = plt.colorbar(img, ax=ax2, label='Temperatura (°C)')
     ax2.set_xlabel('Posició (m)')
     ax2.set_yticks([])
 
-    # --- LÍNIES DE FRONTERA DEL CENTRE (0.5 cm = 0.005 m) ---
-    x_center = 0.01
-    half = 0.005 / 2
-    x_left = x_center - half       # 0.0075
-    x_right = x_center + half      # 0.0125
+    # marquem la zona malalta del cor amb un requadre dicontinu i transparent
+    x_centre = 0.01
+    malalt = 0.005 / 2
+    malalt_esq = x_centre - malalt       
+    malalt_dret = x_centre + malalt      
 
     # Línies discontínues
-    ax2.axvline(x=x_left, color='white', linestyle='--', linewidth=1.4)
-    ax2.axvline(x=x_right, color='white', linestyle='--', linewidth=1.4)
+    ax2.axvline(x=malalt_esq, color='white', linestyle='--', linewidth=1.4)
+    ax2.axvline(x=malalt_dret, color='white', linestyle='--', linewidth=1.4)
 
-    # --- FRANJA SEMITRANSPARENT ENTRE LES DUES LÍNIES ---
-    ax2.axvspan(x_left, x_right, color='white', alpha=0.15)  
-    # alpha = 0.15 dóna un ressalt suau sense tapar el mapa de calor
-
+    # requadre semi-transaparent
+    ax2.axvspan(malalt_esq, malalt_dret, color='white', alpha=0.15)  
     ax2.set_title('t = 0.000 s')
 
-    # Funció d'actualització
+    # Funció d'actualització (va canviant donant a lloc l'animació)
     def update_heat(frame):
         data = all_vals[frame][np.newaxis, :]
         img.set_data(data)
@@ -135,7 +133,7 @@ def euler_explicit(par):
         fig2,
         update_heat,
         frames=frames_to_show,
-        interval=1,   # més ràpid
+        interval=1,   
         blit=False
     )
 

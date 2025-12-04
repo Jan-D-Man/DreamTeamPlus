@@ -6,7 +6,7 @@
     <ProjectHome>.</ProjectHome>
     <StartupFile>grafiques.py</StartupFile>
     <StartupFile>Entrega_definitiva.py</StartupFile>
-    <StartupFile>grafiques_euler_implicit.py</StartupFile>
+    <StartupFile>Animació.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -26,7 +26,7 @@
     <Compile Include="grafiques_euler_implicit.py" />
     <Compile Include="grafiques_euler.py" />
     <Compile Include="cranc_error.py" />
-    <Compile Include="Entrega1Corasaoanimació.py" />
+    <Compile Include="Animació.py" />
     <Compile Include="Entrega1Corasao.py" />
     <Compile Include="entrega1Grs.py" />
     <Compile Include="entrega1MarTA.py" />

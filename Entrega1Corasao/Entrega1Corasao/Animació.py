@@ -50,97 +50,21 @@ for i in range(0,int(0.025/DeltaT)):
 punts=np.linspace(0,0.02,99)
 
 temps = np.array(temps)
-plt.plot(punts,T*T_0)
-plt.show()
-
-plt.figure(figsize=(8,5))
-plt.imshow(temps * T_0, 
-           extent=[0, 0.02, 0, 500], 
-           aspect='auto', 
-           origin='lower', 
-           cmap='hot')
-
-plt.colorbar(label='Temperatura (°C)')
-plt.xlabel('Posició (m)')
-plt.ylabel('Passos de temps')
-plt.title('Mapa de calor de l’evolució de temperatura')
-plt.show()
-
-fig, ax = plt.subplots()
-
-# línia inicial (temps 0)
-linea, = ax.plot(punts, temps[0] * T_0)
-
-ax.set_xlim(0, 0.02)
-ax.set_ylim((temps*T_0).min()*0.9, (temps*T_0).max()*1.1)
-ax.set_xlabel("Posició (m)")
-ax.set_ylabel("Temperatura (°C)")
-
-def init():
-    """Configura el primer frame"""
-    linea.set_ydata(temps[0] * T_0)
-    ax.set_title("t = 0.0 s")
-    return linea,
-
-def update(frame):
-    """Actualitza la línia a cada pas de temps"""
-    T_actual = temps[frame] * T_0
-    linea.set_ydata(T_actual)
-    t_real = frame * DeltaT * t_0   # si vols temps físic
-    ax.set_title(f"t = {t_real:.2f} s")
-    return linea,
-
-ani = FuncAnimation(
-    fig,
-    update,
-    frames=len(temps),
-    init_func=init,
-    blit=True,
-    interval=50   # ms entre frames (canvia-ho per fer-la més ràpida/lenta)
-)
-
-plt.show()
 t=0.025
 
-def sol_anal(x_i):
-    n = np.arange(1, 10**3)
-    return Tc_norm + np.sum(
-    (2/(n*np.pi)) * (1 - (-1)**n) *
-    ((1 - np.exp(-n**2 * np.pi**2 * t)) / (np.pi**2 * n**2)) *np.sin(n*np.pi*x_i) )
 
-T_anal = []
-
-pos=np.linspace(0.01,0.99,99)
-
-for posi in pos:
-    T_anal.append(sol_anal(posi))
-
-Error=[]
-
-for i in range(99):
-    Error.append(np.abs(T_anal[i]-T[i]))
-
-print(Error)
-
-plt.plot(pos,Error)
-plt.show()
-
-
-#CAS 2
+#ANIMACIÓ
 
 # DeltaT = 0.5*DeltaX**2
 # alpha = DeltaT/(DeltaX)**2
 fig2, ax2 = plt.subplots(figsize=(8, 3))
 
-# Rang dinàmic més sensible
 all_vals = temps * T_0
 vmin = np.percentile(all_vals, 1)
 vmax = np.percentile(all_vals, 99)
 
-# Primera fila (temps = 0)
 data0 = all_vals[0][np.newaxis, :]
 
-# Heatmap inicial
 img = ax2.imshow(
     data0,
     extent=[0, 0.02, 0, 1],
@@ -151,12 +75,9 @@ img = ax2.imshow(
     vmax=vmax
 )
 
-# Colorbar
 cbar = plt.colorbar(img, ax=ax2, label='Temperatura (°C)')
 ax2.set_xlabel('Posició (m)')
 ax2.set_yticks([])
-
-# --- LÍNIES DE FRONTERA DEL CENTRE (0.5 cm = 0.005 m) ---
 x_center = 0.01
 half = 0.005 / 2
 x_left = x_center - half       # 0.0075
@@ -166,9 +87,7 @@ x_right = x_center + half      # 0.0125
 ax2.axvline(x=x_left, color='white', linestyle='--', linewidth=1.4)
 ax2.axvline(x=x_right, color='white', linestyle='--', linewidth=1.4)
 
-# --- FRANJA SEMITRANSPARENT ENTRE LES DUES LÍNIES ---
 ax2.axvspan(x_left, x_right, color='white', alpha=0.15)  
-# alpha = 0.15 dóna un ressalt suau sense tapar el mapa de calor
 
 ax2.set_title('t = 0.000 s')
 
