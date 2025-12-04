@@ -7,16 +7,14 @@ c_v=3686
 ro=1081
 V=40
 sigma=0.472
-<<<<<<< HEAD
 l_0=0.02
 t_0=(l_0**2)*c_v*ro/(K)
 T_0=t_0*sigma*V**2/(2*c_v*ro*0.02**2)
-=======
+
 T_0=1
 
 t_adim=2*T_0*c_v*ro/(sigma*V**2)    
 l_adim=K*t_adim/(c_v*ro)
->>>>>>> origin/main
 
 N_v = 100        # mida del vector (la matriu �s 100x100)
 Tc = 36.5   
