@@ -17,9 +17,10 @@ T_0=t_0*sigma*V**2/(2*c_v*ro*0.02**2)
 N_v = 100        # mida del vector (la matriu �s 100x100)
 Tc = 36.5  
 Tc_norm=Tc/T_0
+par=0.25
 
 DeltaX=(0.02/100)/l_0
-DeltaT = 0.25*DeltaX**2
+DeltaT = par*DeltaX**2
 alpha = DeltaT/(DeltaX)**2
 
 #CAS 1
