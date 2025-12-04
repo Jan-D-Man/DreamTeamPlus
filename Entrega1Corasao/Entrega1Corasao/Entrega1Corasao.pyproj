@@ -5,6 +5,7 @@
     <ProjectGuid>bb979d29-8e63-49be-aa34-8bcc688fea00</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>grafiques.py</StartupFile>
+    <StartupFile>grafiques_cranck_nicol.py</StartupFile>
     <StartupFile>Entrega_definitiva.py</StartupFile>
     <StartupFile>Animació.py</StartupFile>
     <SearchPath>
@@ -23,6 +24,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="grafiques_cranck_nicol.py" />
     <Compile Include="grafiques_euler_implicit.py" />
     <Compile Include="grafiques_euler.py" />
     <Compile Include="cranc_error.py" />
