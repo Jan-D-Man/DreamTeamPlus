@@ -43,7 +43,7 @@ def euler_explicit(par):
     c[1:-1] = DeltaT 
     c[0]  = DeltaT + alpha * Tc_norm  #El primer i últim vector tenen termes extra
     c[-1]  =   DeltaT + alpha * Tc_norm     
-    
+
         
     #Construeixo la matriu 99x99 per trobar T a un temps i+1
     diagonal   = (1 - 2*alpha) * np.ones(N_v) #diagonal principal

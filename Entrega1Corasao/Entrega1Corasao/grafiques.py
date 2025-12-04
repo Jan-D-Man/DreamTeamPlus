@@ -1,8 +1,12 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 import math
 from matplotlib.animation import FuncAnimation
+import matplotlib.ticker as ticker
+from matplotlib.ticker import ScalarFormatter
 
+fig_err, ax_err = plt.subplots(figsize=(8,5))
 
 K=0.56
 c_v=3686
@@ -32,9 +36,11 @@ for posi in pos: #Guardem totes les T analitiques per cada valor de x
 
 
 
-par=0.25
-def euler_explicit(par):
-   
+
+pari = [0.49, 0.51, 0.25]
+
+for par in pari:
+
     DeltaX=(0.02/100)/l_0
     DeltaT = par*DeltaX**2
     alpha = DeltaT/(DeltaX)**2
@@ -61,70 +67,74 @@ def euler_explicit(par):
         d=T #per cada iteració fiquem la T del temps anterior
 
     punts=np.linspace(0.0002,0.0198,99)   
-    plt.plot(punts,T*T_0) #Represento la temperatura sense normalitzar per cada
-    plt.xlabel('Posició (m)')
-    plt.ylabel('Temperatura (ºC)')
-    plt.title('Euler explicit')
-    plt.show()
 
-    temps = np.array(temps)
-    plt.figure(figsize=(8,5)) #Represento el diagrama de calor
-    plt.imshow(temps * T_0, 
-               extent=[0, 0.02, 0, 500], 
-               aspect='auto', 
-               origin='lower', 
-               cmap='hot')
+    fig, ax = plt.subplots(figsize=(8,5))
 
-    plt.colorbar(label='Temperatura (°C)')
-    plt.xlabel('Posició (m)')
-    plt.ylabel('Passos de temps')
-    plt.title('Mapa de calor de l’evolució de temperatura')
-    plt.show()
+    # Dibujamos la temperatura
+    ax.plot(punts, T * T_0)
 
-    fig, ax = plt.subplots()
+    # Configuramos etiquetas, límites y cuadrícula
 
-    # línia inicial (temps 0)
-    linea, = ax.plot(punts, temps[0] * T_0)
-
+    ax.set_xlabel('Posició (m)')
+    ax.set_ylabel('Temperatura (ºC)')
     ax.set_xlim(0, 0.02)
-    ax.set_ylim((temps*T_0).min()*0.9, (temps*T_0).max()*1.1)
-    ax.set_xlabel("Posició (m)")
-    ax.set_ylabel("Temperatura (°C)")
+    ax.set_ylim(36, 54)
+    ax.grid(True,linestyle='--')
 
-    def init():
-        """Configura el primer frame"""
-        linea.set_ydata(temps[0] * T_0)
-        ax.set_title("t = 0.0 s")
-        return linea,
+    # Configuramos las marcas de los ticks
+    ax.tick_params(axis='both', which='both', direction='in', length=6)
+    ax.xaxis.set_ticks_position('both')
+    ax.yaxis.set_ticks_position('both')
 
-    def update(frame):
-        """Actualitza la línia a cada pas de temps"""
-        T_actual = temps[frame] * T_0
-        linea.set_ydata(T_actual)
-        t_real = frame * DeltaT * t_0   # si vols temps físic
-        ax.set_title(f"t = {t_real:.2f} s")
-        return linea,
+    class CustomScalarFormatter(ScalarFormatter):
+        def _set_format(self):
+            self.format = "%0.2f"
 
-    ani = FuncAnimation(
-        fig,
-        update,
-        frames=len(temps),
-        init_func=init,
-        blit=True,
-        interval=50   # ms entre frames (canvia-ho per fer-la més ràpida/lenta)
-    )
+    formatter = CustomScalarFormatter(useMathText=True)
+    formatter.set_powerlimits((0, 0))
+    formatter.set_scientific(True)
 
-    plt.show()
-    
-    #SOLUCIÓ ANALITICA
+    ax.xaxis.set_major_formatter(formatter)
+
+    plt.show()  
+
+#SOLUCIÓ ANALITICA
     Error=[]
-    for i in range(99): #Calculem l'error
-        Error.append(np.abs(T_anal[i]-T[i])) 
 
-    print(Error)
+    
 
-    plt.plot(pos,Error)
-    plt.ylabel('Error')
-    plt.xlabel('Posició normalitzada')
-    plt.title('Error euler explicit ')
-    plt.show()
+    
+    Error=np.abs(T_anal-T)
+    ax_err.plot(pos, Error, label=f'par = {par}')
+
+
+
+
+# Configuramos etiquetas, límites y cuadrícula
+
+ax.set_xlabel('Posició normalitzada')
+ax.set_ylabel('Error')
+ax.set_xlim(0, 1)
+ax.set_ylim(0, 1.2)
+ax.grid(True,linestyle='--')
+
+# Configuramos las marcas de los ticks
+ax.tick_params(axis='both', which='both', direction='in', length=6)
+ax.xaxis.set_ticks_position('both')
+ax.yaxis.set_ticks_position('both')
+
+class CustomScalarFormatter(ScalarFormatter):
+    def _set_format(self):
+        self.format = "%0.2f"
+
+formatter = CustomScalarFormatter(useMathText=True)
+formatter.set_powerlimits((0, 0))
+formatter.set_scientific(True)
+
+ax.yaxis.set_major_formatter(formatter)
+
+
+
+
+# Mostramos la gráfica
+plt.show()
