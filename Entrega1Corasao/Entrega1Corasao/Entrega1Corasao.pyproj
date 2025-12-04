@@ -5,7 +5,7 @@
     <ProjectGuid>bb979d29-8e63-49be-aa34-8bcc688fea00</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>grafiques.py</StartupFile>
-    <StartupFile>Entrega1Corasaoanimació.py</StartupFile>
+    <StartupFile>grafiques.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
