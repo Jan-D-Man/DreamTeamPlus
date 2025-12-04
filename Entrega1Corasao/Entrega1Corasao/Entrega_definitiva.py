@@ -81,37 +81,62 @@ def euler_explicit(par):
     plt.title('Mapa de calor de l’evolució de temperatura')
     plt.show()
 
-    fig, ax = plt.subplots()
+    fig2, ax2 = plt.subplots(figsize=(8, 3))
 
-    # línia inicial (temps 0)
-    linea, = ax.plot(punts, temps[0] * T_0)
+# Rang dinàmic més sensible
+    all_vals = temps * T_0
+    vmin = np.percentile(all_vals, 1)
+    vmax = np.percentile(all_vals, 99)
 
-    ax.set_xlim(0, 0.02)
-    ax.set_ylim((temps*T_0).min()*0.9, (temps*T_0).max()*1.1)
-    ax.set_xlabel("Posició (m)")
-    ax.set_ylabel("Temperatura (°C)")
+    # Primera fila (temps = 0)
+    data0 = all_vals[0][np.newaxis, :]
 
-    def init():
-        """Configura el primer frame"""
-        linea.set_ydata(temps[0] * T_0)
-        ax.set_title("t = 0.0 s")
-        return linea,
+    # Heatmap inicial
+    img = ax2.imshow(
+        data0,
+        extent=[0, 0.02, 0, 1],
+        aspect='auto',
+        origin='lower',
+        cmap='turbo',
+        vmin=vmin,
+        vmax=vmax
+    )
 
-    def update(frame):
-        """Actualitza la línia a cada pas de temps"""
-        T_actual = temps[frame] * T_0
-        linea.set_ydata(T_actual)
-        t_real = frame * DeltaT * t_0   # si vols temps físic
-        ax.set_title(f"t = {t_real:.2f} s")
-        return linea,
+    # Colorbar
+    cbar = plt.colorbar(img, ax=ax2, label='Temperatura (°C)')
+    ax2.set_xlabel('Posició (m)')
+    ax2.set_yticks([])
 
-    ani = FuncAnimation(
-        fig,
-        update,
-        frames=len(temps),
-        init_func=init,
-        blit=True,
-        interval=50   # ms entre frames (canvia-ho per fer-la més ràpida/lenta)
+    # --- LÍNIES DE FRONTERA DEL CENTRE (0.5 cm = 0.005 m) ---
+    x_center = 0.01
+    half = 0.005 / 2
+    x_left = x_center - half       # 0.0075
+    x_right = x_center + half      # 0.0125
+
+    # Línies discontínues
+    ax2.axvline(x=x_left, color='white', linestyle='--', linewidth=1.4)
+    ax2.axvline(x=x_right, color='white', linestyle='--', linewidth=1.4)
+
+    # --- FRANJA SEMITRANSPARENT ENTRE LES DUES LÍNIES ---
+    ax2.axvspan(x_left, x_right, color='white', alpha=0.15)  
+    # alpha = 0.15 dóna un ressalt suau sense tapar el mapa de calor
+
+    ax2.set_title('t = 0.000 s')
+
+    # Funció d'actualització
+    def update_heat(frame):
+        data = all_vals[frame][np.newaxis, :]
+        img.set_data(data)
+        t_real = frame * DeltaT
+        ax2.set_title(f't = {t_real:.3f} s')
+        return img,
+    frames_to_show = range(0, len(temps), 8)
+    ani2 = FuncAnimation(
+        fig2,
+        update_heat,
+        frames=frames_to_show,
+        interval=1,   # més ràpid
+        blit=False
     )
 
     plt.show()
@@ -154,7 +179,7 @@ def euler_implicit(par_1):
     for i in range(0,int(0.025/DeltaT)): #resolc la equació fins a el temps que volem
         x = np.linalg.solve(A, b) #resol el sistema automàticament
 
-        b=x+np.ones(N_v-1)*DeltaT+inicial_final #cada cop que iterem la temperatura anterior canvia
+        b=x+np.ones(N_v)*DeltaT+inicial_final #cada cop que iterem la temperatura anterior canvia
 
     punts=np.linspace(0.0002,0.0198,99)
     plt.plot(punts,x*T_0) 
@@ -206,7 +231,7 @@ def crank_nicolson(per_2):
     B = np.diag(diagonal_2) + np.diag(adalt_2, 1) + np.diag(abaix_2, -1) 
 
     #El vector que conté T i (al inici valen Tc)
-    d=np.ones(N_v-1)*Tc_norm
+    d=np.ones(N_v)*Tc_norm
 
     temps = []
 
@@ -250,4 +275,6 @@ def crank_nicolson(per_2):
     plt.title('Error Cranck-Nicolson')
     plt.show()
 
-
+euler_explicit(par)
+euler_implicit(par_1)
+crank_nicolson(per_2)
