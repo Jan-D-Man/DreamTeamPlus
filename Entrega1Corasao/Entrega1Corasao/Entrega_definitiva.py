@@ -18,6 +18,20 @@ N_v = 99        # (la matriu es 99x99 i farem N_v-1 de dimensió)
 Tc = 36.5  
 Tc_norm=Tc/T_0
 
+def sol_anal(x_i): #definim la solucio analitica
+    n = np.arange(1, 10**3)
+    return Tc_norm + np.sum(
+        (2/(n*np.pi)) * (1 - (-1)**n) *
+        ((1 - np.exp(-n**2 * np.pi**2 * t)) / (np.pi**2 * n**2)) *np.sin(n*np.pi*x_i) )
+
+T_anal = []
+pos=np.linspace(0.01,0.99,99) #no hem agafat els termes de les C.C
+
+for posi in pos: #Guardem totes les T analitiques per cada valor de x
+    T_anal.append(sol_anal(posi))
+
+
+
 par=0.25
 def euler_explicit(par):
    
@@ -46,10 +60,11 @@ def euler_explicit(par):
         temps.append(T)
         d=T #per cada iteració fiquem la T del temps anterior
 
-    punts=np.linspace(0,0.02,99)   
+    punts=np.linspace(0.0002,0.0198,99)   
     plt.plot(punts,T*T_0) #Represento la temperatura sense normalitzar per cada
     plt.xlabel('Posició (m)')
-    plt.ylabel('Passos de temps')
+    plt.ylabel('Temperatura (ºC)')
+    plt.title('Euler explicit')
     plt.show()
 
     temps = np.array(temps)
@@ -101,19 +116,7 @@ def euler_explicit(par):
 
     plt.show()
     
-
-    def sol_anal(x_i): #definim la solucio analitica
-        n = np.arange(1, 10**3)
-        return Tc_norm + np.sum(
-        (2/(n*np.pi)) * (1 - (-1)**n) *
-        ((1 - np.exp(-n**2 * np.pi**2 * t)) / (np.pi**2 * n**2)) *np.sin(n*np.pi*x_i) )
-
-    T_anal = []
-    pos=np.linspace(0.01,0.99,99)
-
-    for posi in pos: #Guardem totes les T analitiques per cada valor de x
-        T_anal.append(sol_anal(posi))
-
+    #SOLUCIÓ ANALITICA
     Error=[]
     for i in range(99): #Calculem l'error
         Error.append(np.abs(T_anal[i]-T[i])) 
@@ -121,12 +124,12 @@ def euler_explicit(par):
     print(Error)
 
     plt.plot(pos,Error)
-    plt.ylabel(Error)
-    plt.xlabel(pos)
+    plt.ylabel('Error')
+    plt.xlabel('Posició normalitzada')
+    plt.title('Error euler explicit ')
     plt.show()
 
 par_1=1
-
 def euler_implicit(par_1):
     DeltaX=(0.02/100)/l_0
     DeltaT = par_1*DeltaX**2
@@ -153,37 +156,98 @@ def euler_implicit(par_1):
 
         b=x+np.ones(N_v-1)*DeltaT+inicial_final #cada cop que iterem la temperatura anterior canvia
 
-    punts=np.linspace(0,0.02,99)
+    punts=np.linspace(0.0002,0.0198,99)
     plt.plot(punts,x*T_0) 
+    plt.xlabel('Posició (m)')
+    plt.ylabel('Temperatura (ºC)')
     plt.show()
 
    
 
     #SOLUCIÓ ANALÍTICA
+    Error=[]
 
-    t=0.025
+    for i in range(99): #Calculem l'error
+        Error.append(np.abs(T_anal[i]-x[i]))
 
-    def sol_anal(x_i):
-        n = np.arange(1, 10**3)
-        return Tc_norm + np.sum(
-        (2/(n*np.pi)) * (1 - (-1)**n) *
-        ((1 - np.exp(-n**2 * np.pi**2 * t)) / (np.pi * n**2)) *
-        np.sin(n*np.pi*x_i) ) 
+    plt.plot(pos,Error)
+    plt.xlabel('Posició normalitzada')
+    plt.ylabel('Error')
+    plt.title('Error euler implícit')
+    plt.show()
 
-    T_anal = []
 
-    pos=np.linspace(0.01,0.99,99)
+per_2=0.5
 
-    for posi in pos:
-        T_anal.append(sol_anal(posi))
+def crank_nicolson(per_2):
 
+    DeltaX=(0.02/100)/l_0
+    DeltaT = per_2*DeltaX**2
+    alpha = DeltaT/(DeltaX)**2
+
+    
+    c = np.zeros(N_v) #creem el vector independent del sistema matricial
+    c[0]  = 2*DeltaT + 2*alpha * Tc_norm    #la primera i ultima tenen les C.C  
+    c[-1]  =   2*DeltaT + 2*alpha * Tc_norm     
+    c[1:-1] = 2*DeltaT
+        
+    #Creem la matriu que multiplica el vector de les T i+1
+    diagonal_1   = 2*(1 + alpha) * np.ones(N_v) 
+    adalt_1  = (-alpha) * np.ones(N_v - 1) 
+    abaix_1  = (-alpha) * np.ones(N_v - 1)
+    A = np.diag(diagonal_1) + np.diag(adalt_1, 1) + np.diag(abaix_1, -1) #construïm A
+
+    Ainv=np.linalg.inv(A) #Calculem la inversa
+
+    #Creem la matriu que multiplica el vector de les T i
+    diagonal_2   = 2*(1 - alpha) * np.ones(N_v) 
+    adalt_2  = (alpha) * np.ones(N_v - 1) 
+    abaix_2 = (alpha) * np.ones(N_v - 1)
+    B = np.diag(diagonal_2) + np.diag(adalt_2, 1) + np.diag(abaix_2, -1) 
+
+    #El vector que conté T i (al inici valen Tc)
+    d=np.ones(N_v-1)*Tc_norm
+
+    temps = []
+
+    for i in range(0,int(0.025/DeltaT)): #resolem el sistema
+        T=Ainv@B@d+Ainv@c
+        temps.append(T)
+        d=T #Per cada iteració la T anterior canvia
+
+
+    punts=np.linspace(0.0002,0.0198,99)
+    plt.plot(punts,T*T_0)
+    plt.xlabel('Posició (m)')
+    plt.ylabel('Temperatura (ºC)')
+    plt.title('Cranck-Nicolson')
+    plt.show()
+
+    temps = np.array(temps)
+
+    plt.figure(figsize=(8,5))
+    plt.imshow(temps * T_0, 
+               extent=[0.0002, 0.0198, 0, int(0.025/DeltaT)], 
+               aspect='auto', 
+               origin='lower', 
+               cmap='hot')
+
+    plt.colorbar(label='Temperatura (°C)')
+    plt.xlabel('Posició (m)')
+    plt.ylabel('Passos de temps')
+    plt.title('Mapa de calor de l’evolució de temperatura')
+    plt.show()
+
+    #SOLUCIÓ ANALÍTICA
     Error=[]
 
     for i in range(99):
-        Error.append(np.abs(T_anal[i]-x[i]))
-
-    print(Error)
+        Error.append(np.abs(T_anal[i]-T[i]))
 
     plt.plot(pos,Error)
+    plt.xlabel('Posició normalitzada')
+    plt.ylabel('Error')
+    plt.title('Error Cranck-Nicolson')
     plt.show()
+
 
