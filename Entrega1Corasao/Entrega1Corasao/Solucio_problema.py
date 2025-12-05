@@ -52,7 +52,7 @@ def euler_explicit(par):
         T=B@d + c
         temps.append(T)
         if CAS_LIMIT and T[pos_front]*T_0 >= 50:
-            print(f"La simulació s'atura al pas de temps: {i*DeltaT*T_0:.4f} s perquè s'ha assolit la temperatura límit de 50ºC.")
+            print(f"La simulació s'atura al pas de temps: {i*DeltaT*t_0:.4f} s perquè s'ha assolit la temperatura límit de 50ºC.")
             break
         d=T #per cada iteració fiquem la T del temps anterior
     
