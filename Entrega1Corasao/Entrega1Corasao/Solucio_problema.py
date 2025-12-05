@@ -12,11 +12,13 @@ ro=1081
 V=40
 sigma=0.472
 l_0=0.02
+pos_front = int(0.0075/l_0*99) #Posició de la frontera malalta de calor en la matriu normalitzada (0.0075m)
 t_0=(l_0**2)*c_v*ro/(K)
 T_0=t_0*sigma*V**2/(2*c_v*ro*0.02**2)
 t=0.025
 CAS_LIMIT = True #activar er el cas en que el model para a l'arribar a la temperatura límit (50ºC)
-
+x_esq = 0.0075  # Posició esquerra de la zona malalta 
+x_dret = 0.0125 # Posició dreta de la zona malalta 
 
 N_v = 99        # (la matriu es 99x99 i farem N_v-1 de dimensió)
 Tc = 36.5  
@@ -49,7 +51,7 @@ def euler_explicit(par):
     for i in range(0,int(0.025/DeltaT)): #resolc la equació fins a el temps que volem
         T=B@d + c
         temps.append(T)
-        if CAS_LIMIT and np.any(T*T_0 >= 50):
+        if CAS_LIMIT and T[pos_front]*T_0 >= 50:
             print(f"La simulació s'atura al pas de temps: {i*DeltaT:.4f} s perquè s'ha assolit la temperatura límit de 50ºC.")
             break
         d=T #per cada iteració fiquem la T del temps anterior
@@ -73,6 +75,10 @@ def euler_explicit(par):
     ax.set_xlim(0, 0.02)
     ax.set_ylim(36, 52)
     ax.grid(True,linestyle='--')
+    ax.axvline(x=x_esq, color='red', linestyle='--', linewidth=1.4)
+    ax.axvline(x=x_dret, color='red', linestyle='--', linewidth=1.4)
+
+    ax.axvspan(x_esq, x_dret, color='red', alpha=0.15)  
 
     # Configuramos las marcas de los ticks
     ax.tick_params(axis='both', which='both', direction='in', length=6)

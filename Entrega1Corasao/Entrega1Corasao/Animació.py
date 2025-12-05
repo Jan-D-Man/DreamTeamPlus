@@ -82,14 +82,14 @@ ax2.set_xlabel('Posició (m)')
 ax2.set_yticks([])
 x_center = 0.01
 half = 0.005 / 2
-x_left = x_center - half       # 0.0075
-x_right = x_center + half      # 0.0125
+x_esq = x_center - half       # 0.0075
+x_dret = x_center + half      # 0.0125
 
 # Línies discontínues
-ax2.axvline(x=x_left, color='white', linestyle='--', linewidth=1.4)
-ax2.axvline(x=x_right, color='white', linestyle='--', linewidth=1.4)
+ax2.axvline(x=x_esq, color='white', linestyle='--', linewidth=1.4)
+ax2.axvline(x=x_dret, color='white', linestyle='--', linewidth=1.4)
 
-ax2.axvspan(x_left, x_right, color='white', alpha=0.15)  
+ax2.axvspan(x_esq, x_dret, color='white', alpha=0.15)  
 
 ax2.set_title('t = 0.000 s')
 
