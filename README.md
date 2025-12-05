@@ -1,13 +1,15 @@
 # DreamTeamPlus
 DreamTeam + Jan D Man
+
 S’ha d’instal·lar la llibreria Numpy i Mathplotlib per a poder visualitzar el nostre codi.
 Al Github tenim diversos documents:
-• Enterga definitiva (document on està el codi principal)
-• Gràfiques euler explícit
-• Gràfiques euler implícit
-• Gràfiques crank-nicolson
-• Solució del problema amb euler explícit
-• Animacions
+- Enterga definitiva (document on està el codi principal)
+- Gràfiques euler explícit
+- Gràfiques euler implícit
+- Gràfiques crank-nicolson
+- Solució del problema amb euler explícit
+- Animacions
+- 
 Entrega definitiva: aquí està el codi principal. Està dividit en tres parts definides: euler explícit, euler implícit
 i crank-nicolson. Per a fer-los aparèixer (tant l’evolució de la temperatura en funció de la posició com l’error) s’ha de
 cridar-los al final del codi amb els seg¨uents noms:
