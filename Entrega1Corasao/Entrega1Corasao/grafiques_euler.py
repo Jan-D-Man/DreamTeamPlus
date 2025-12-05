@@ -39,7 +39,8 @@ for posi in pos: #Guardem totes les T analitiques per cada valor de x
 
 
 Error_tres = [] 
-pari = [0.49, 0.51, 0.25]
+pari = [0.25, 0.49, 0.51]
+Temperatures=[]
 
 for par in pari:
 
@@ -68,39 +69,42 @@ for par in pari:
         temps.append(T)
         d=T #per cada iteració fiquem la T del temps anterior
 
-    punts=np.linspace(0.0002,0.0198,99)   
+    Temperatures.append(T)
 
-    fig, ax = plt.subplots(figsize=(8,5))
+punts=np.linspace(0.0002,0.0198,99)   
 
-    # Dibujamos la temperatura
-    ax.plot(punts, T * T_0)
+fig, ax = plt.subplots(figsize=(8,5))
 
-    # Configuramos etiquetas, límites y cuadrícula
+# Dibujamos la temperatura
+ax.plot(punts, Temperatures[0]* T_0, label='$ΔT=0,25·ΔX^2$', linewidth=3, color='orange')
+ax.plot(punts, Temperatures[1]* T_0, label='$ΔT=0,49·ΔX^2$', linestyle='--',color='blue')
+# Configuramos etiquetas, límites y cuadrícula
 
-    ax.set_xlabel('Posició (m)')
-    ax.set_ylabel('Temperatura (ºC)')
-    ax.set_xlim(0, 0.02)
-    ax.set_ylim(-1000, 1000)
-    ax.grid(True,linestyle='--')
+ax.set_xlabel('Posició (m)')
+ax.set_ylabel('Temperatura (ºC)')
+ax.set_xlim(0, 0.02)
+ax.set_ylim(36, 54)
+ax.grid(True,linestyle='--')
 
-    # Configuramos las marcas de los ticks
-    ax.tick_params(axis='both', which='both', direction='in', length=6)
-    ax.xaxis.set_ticks_position('both')
-    ax.yaxis.set_ticks_position('both')
+# Configuramos las marcas de los ticks
+ax.tick_params(axis='both', which='both', direction='in', length=6)
+ax.xaxis.set_ticks_position('both')
+ax.yaxis.set_ticks_position('both')
 
-    class CustomScalarFormatter(ScalarFormatter):
-        def _set_format(self):
-            self.format = "%0.2f"
+class CustomScalarFormatter(ScalarFormatter):
+    def _set_format(self):
+        self.format = "%0.2f"
 
-    formatter = CustomScalarFormatter(useMathText=True)
-    formatter.set_powerlimits((0, 0))
-    formatter.set_scientific(True)
+formatter = CustomScalarFormatter(useMathText=True)
+formatter.set_powerlimits((0, 0))
+formatter.set_scientific(True)
 
-    ax.xaxis.set_major_formatter(formatter)
-
-    plt.show()  
+ax.xaxis.set_major_formatter(formatter)
+ax.legend(loc='upper right')
+plt.show()  
 
 #SOLUCIÓ ANALITICA
+   
     Error=[]
     
     for i in range(99): #Calculem l'error

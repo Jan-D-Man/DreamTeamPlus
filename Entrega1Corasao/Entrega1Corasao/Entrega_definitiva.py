@@ -147,7 +147,7 @@ def euler_explicit(par):
     #SOLUCIÓ ANALITICA
     Error=[]
     for i in range(99): #Calculem l'error
-        Error.append(np.abs(T_anal[i]-T[i])) 
+        Error.append((T_anal[i]-T[i])) 
 
     print(Error)
 
@@ -278,6 +278,6 @@ def crank_nicolson(per_2):
     plt.title('Error Cranck-Nicolson')
     plt.show()
 
-euler_explicit(par)
-euler_implicit(par_1)
+#euler_explicit(par)
+#euler_implicit(par_1)
 crank_nicolson(per_2)
