@@ -3,16 +3,17 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bb979d29-8e63-49be-aa34-8bcc688fea00</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
+    <ProjectHome>
+    </ProjectHome>
     <StartupFile>grafiques.py</StartupFile>
     <StartupFile>grafiques_cranck_nicol.py</StartupFile>
     <StartupFile>Entrega_definitiva.py</StartupFile>
-    <StartupFile>Animació.py</StartupFile>
+    <StartupFile>Solucio_problema.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Entrega1Corasao</Name>
+    <Name>Pràctica1</Name>
     <RootNamespace>Entrega1Corasao</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -24,14 +25,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="grafiques_cranck_nicol.py" />
+    <Compile Include="Solucio_problema.py" />
+    <Compile Include="grafiques_crank_nicolson.py" />
     <Compile Include="grafiques_euler_implicit.py" />
-    <Compile Include="grafiques_euler.py" />
-    <Compile Include="cranc_error.py" />
+    <Compile Include="grafiques_euler_explicit.py" />
     <Compile Include="Animació.py" />
-    <Compile Include="Entrega1Corasao.py" />
-    <Compile Include="entrega1Grs.py" />
-    <Compile Include="entrega1MarTA.py" />
     <Compile Include="Entrega_definitiva.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

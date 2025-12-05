@@ -13,7 +13,7 @@ l_0=0.02
 t_0=(l_0**2)*c_v*ro/(K)
 T_0=t_0*sigma*V**2/(2*c_v*ro*0.02**2)
 t=0.025
-CAS_LIMIT = True #activar er el cas en que el model para a l'arribar a la temperatura límit (50ºC)
+CAS_LIMIT = False #activar er el cas en que el model para a l'arribar a la temperatura límit (50ºC)
 
 
 N_v = 99        # (la matriu es 99x99 i farem N_v-1 de dimensió)

@@ -73,7 +73,7 @@ for par in pari:
     Error=[]
     
     for i in range(99): #Calculem l'error
-        Error.append((T_anal[i]-x[i]))
+        Error.append(np.abs(T_anal[i]-x[i]))
 
     Error_tres.append(Error)
 

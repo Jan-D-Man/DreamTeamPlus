@@ -71,6 +71,13 @@ for par in pari:
 
     Temperatures.append(T)
 
+    Error=[]
+    
+    for i in range(99): #Calculem l'error
+        Error.append(np.abs(T_anal[i]-T[i]))
+
+    Error_tres.append(Error)
+
 punts=np.linspace(0.0002,0.0198,99)   
 
 fig, ax = plt.subplots(figsize=(8,5))
@@ -105,12 +112,6 @@ plt.show()
 
 #SOLUCIÓ ANALITICA
    
-    Error=[]
-    
-    for i in range(99): #Calculem l'error
-        Error.append(np.abs(T_anal[i]-T[i]))
-
-    Error_tres.append(Error)
 
 fig_err, ax_err = plt.subplots(figsize=(8,5))
 ax_err.plot(pos, Error_tres[2], label='$ΔT=0,25·ΔX^2$', linewidth=2)
