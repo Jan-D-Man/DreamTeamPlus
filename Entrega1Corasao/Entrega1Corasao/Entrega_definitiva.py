@@ -13,7 +13,7 @@ l_0=0.02
 t_0=(l_0**2)*c_v*ro/(K)
 T_0=t_0*sigma*V**2/(2*c_v*ro*0.02**2)
 t=0.025
-CAS_LIMIT = False #activar er el cas en que el model para a l'arribar a la temperatura límit (50ºC)
+CAS_LIMIT = False #activar en el cas en que el model para a l'arribar a la temperatura límit (50ºC)
 
 
 N_v = 99        # (la matriu es 99x99 i farem N_v-1 de dimensió)
@@ -69,7 +69,7 @@ def euler_explicit(par):
     plt.plot(punts,T*T_0) #Represento la temperatura sense normalitzar per cada
     plt.xlabel('Posició (m)')
     plt.ylabel('Temperatura (ºC)')
-    plt.title('Euler explicit')
+    plt.title('Euler explícit')
     plt.show()
 
     temps = np.array(temps)
@@ -135,14 +135,12 @@ def euler_explicit(par):
     #SOLUCIÓ ANALITICA
     Error=[]
     for i in range(99): #Calculem l'error
-        Error.append((T_anal[i]-T[i])) 
-
-    print(Error)
+        Error.append(np.abs(T_anal[i]-T[i])) 
 
     plt.plot(pos,Error)
     plt.ylabel('Error')
     plt.xlabel('Posició normalitzada')
-    plt.title('Error euler explicit ')
+    plt.title('Error euler explícit ')
     plt.show()
 
 par_1=1
@@ -176,6 +174,7 @@ def euler_implicit(par_1):
     plt.plot(punts,x*T_0) 
     plt.xlabel('Posició (m)')
     plt.ylabel('Temperatura (ºC)')
+    plt.title('Error euler implícit ')
     plt.show()
 
    

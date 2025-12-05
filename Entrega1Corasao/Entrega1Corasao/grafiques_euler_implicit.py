@@ -18,7 +18,7 @@ t_0=(l_0**2)*c_v*ro/(K)
 T_0=t_0*sigma*V**2/(2*c_v*ro*0.02**2)
 t=0.025
 
-N_v = 99        # (la matriu es 99x99 i farem N_v-1 de dimensió)
+N_v = 99        # (la matriu es 99x99 i farem N_v de dimensió)
 Tc = 36.5  
 Tc_norm=Tc/T_0
 
@@ -80,7 +80,8 @@ for par in pari:
 fig, ax = plt.subplots(figsize=(8,5))
 
 punts=np.linspace(0.0002,0.0198,99)
-# Dibujamos la temperatura
+
+#Fem el gràfic
 ax.plot(punts, Grafics[0] * T_0, label='$ΔT=0,5·ΔX^2$', linewidth=3, color='orange')
 ax.plot(punts, Grafics[1] * T_0, label='$ΔT=ΔX^2$', linestyle='--',color='blue')
     
@@ -91,7 +92,7 @@ ax.set_xlim(0, 0.02)
 ax.set_ylim(36, 54)
 ax.grid(True,linestyle='--')
 
-# Configuramos las marcas de los ticks
+# Fiquem ticks
 ax.tick_params(axis='both', which='both', direction='in', length=6)
 ax.xaxis.set_ticks_position('both')
 ax.yaxis.set_ticks_position('both')
@@ -110,15 +111,12 @@ plt.show()
 
 #Sol analitica
 
-
+#Escollim quin volem respresentar
 fig_err, ax_err = plt.subplots(figsize=(8,5))
 ax_err.plot(pos, Error_tres[1], label='$ΔT=ΔX^2$', linewidth=2)
 ax_err.plot(pos, Error_tres[0], label='$ΔT=0,50·ΔX^2$', linewidth=2)
-#ax_err.plot(pos, Error_tres[1], label='$ΔT=0,51·ΔX^2$', linewidth=2)
 
 
-
-# Configuramos etiquetas, límites y cuadrícula
 
 ax_err.set_xlabel('Posició normalitzada')
 ax_err.set_ylabel('Error')
@@ -126,7 +124,7 @@ ax_err.set_xlim(0, 1)
 ax_err.set_ylim(0, 0.16*10**-4)
 ax_err.grid(True,linestyle='--')
 
-# Configuramos las marcas de los ticks
+
 ax_err.tick_params(axis='both', which='both', direction='in', length=6)
 ax_err.xaxis.set_ticks_position('both')
 ax_err.yaxis.set_ticks_position('both')
@@ -140,6 +138,5 @@ formatter.set_powerlimits((0, 0))
 formatter.set_scientific(True)
 
 ax_err.yaxis.set_major_formatter(formatter)
-# Mostramos la gráfica
 ax_err.legend(loc='upper left')
 plt.show()

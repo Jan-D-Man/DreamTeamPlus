@@ -16,7 +16,7 @@ l_0=0.02
 t_0=(l_0**2)*c_v*ro/(K)
 T_0=t_0*sigma*V**2/(2*c_v*ro*0.02**2)
 
-N_v = 100        # mida del vector (la matriu �s 100x100)
+N_v = 100        # mida del vector (la matriu es 99x99)
 Tc = 36.5  
 Tc_norm=Tc/T_0
 
@@ -24,27 +24,24 @@ DeltaX=(0.02/100)/l_0
 DeltaT = 0.25*DeltaX**2
 alpha = DeltaT/(DeltaX)**2
 
-#CAS 1
 
-c = np.zeros(N_v-1) #construeixo el vector b
-# j = 1 i j = N-2 en Python (posicions especials)
-c[0]  = DeltaT + alpha * Tc_norm      # j = 1
-c[-1]  =   DeltaT + alpha * Tc_norm     # j = N-1 Aqu� s� que puc dir que acaba en N_v-1 perqu� he dit que N_v �s 100
-
-  # j = 2 fins a N-2  -> Python: 1 fins a N-2 no inclou el últim
+#Fem euler com hem explicat al codi de l'entrega definitiva
+c = np.zeros(N_v-1) 
+c[0]  = DeltaT + alpha * Tc_norm     
+c[-1]  =   DeltaT + alpha * Tc_norm     
 c[1:-1] = DeltaT
-    #Ax=b
+   
 
-diagonal   = (1 - 2*alpha) * np.ones(N_v-1) #diagonal -> np.ones ens construeix un vector de dimensi� N_v amb tot 1
-adalt  = (alpha) * np.ones(N_v - 2) #�diagonal' de dalt i abaix
+diagonal   = (1 - 2*alpha) * np.ones(N_v-1) 
+adalt  = (alpha) * np.ones(N_v - 2) 
 abaix = (alpha) * np.ones(N_v - 2)
 
-B = np.diag(diagonal) + np.diag(adalt, 1) + np.diag(abaix, -1) #construïm A
+B = np.diag(diagonal) + np.diag(adalt, 1) + np.diag(abaix, -1) #construïm B
 
 d=np.ones(N_v-1)*Tc_norm
 temps = []
 for i in range(0,int(0.025/DeltaT)):
-    # Soluci� del sistema
+    # Solucio del sistema
     T=B@d + c
     temps.append(T)
     d=T

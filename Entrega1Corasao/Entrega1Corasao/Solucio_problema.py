@@ -20,7 +20,7 @@ CAS_LIMIT = True #activar er el cas en que el model para a l'arribar a la temper
 x_esq = 0.0075  # Posició esquerra de la zona malalta 
 x_dret = 0.0125 # Posició dreta de la zona malalta 
 
-N_v = 99        # (la matriu es 99x99 i farem N_v-1 de dimensió)
+N_v = 99        # (la matriu es 99x99 i farem N_v de dimensió)
 Tc = 36.5  
 Tc_norm=Tc/T_0
 
@@ -52,7 +52,7 @@ def euler_explicit(par):
         T=B@d + c
         temps.append(T)
         if CAS_LIMIT and T[pos_front]*T_0 >= 50:
-            print(f"La simulació s'atura al pas de temps: {i*DeltaT:.4f} s perquè s'ha assolit la temperatura límit de 50ºC.")
+            print(f"La simulació s'atura al pas de temps: {i*DeltaT*T_0:.4f} s perquè s'ha assolit la temperatura límit de 50ºC.")
             break
         d=T #per cada iteració fiquem la T del temps anterior
     
@@ -79,8 +79,6 @@ def euler_explicit(par):
     ax.axvline(x=x_dret, color='red', linestyle='--', linewidth=1.4)
 
     ax.axvspan(x_esq, x_dret, color='red', alpha=0.15)  
-
-    # Configuramos las marcas de los ticks
     ax.tick_params(axis='both', which='both', direction='in', length=6)
     ax.xaxis.set_ticks_position('both')
     ax.yaxis.set_ticks_position('both')
