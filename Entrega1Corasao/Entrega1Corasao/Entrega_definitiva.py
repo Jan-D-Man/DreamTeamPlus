@@ -13,6 +13,8 @@ l_0=0.02
 t_0=(l_0**2)*c_v*ro/(K)
 T_0=t_0*sigma*V**2/(2*c_v*ro*0.02**2)
 t=0.025
+CAS_LIMIT = True #activar er el cas en que el model para a l'arribar a la temperatura límit (50ºC)
+
 
 N_v = 99        # (la matriu es 99x99 i farem N_v-1 de dimensió)
 Tc = 36.5  
@@ -58,6 +60,9 @@ def euler_explicit(par):
     for i in range(0,int(0.025/DeltaT)): #resolc la equació fins a el temps que volem
         T=B@d + c
         temps.append(T)
+        if CAS_LIMIT and np.any(T*T_0 >= 50):
+            print(f"La simulació s'atura al pas de temps: {i*DeltaT:.4f} s perquè s'ha assolit la temperatura límit de 50ºC.")
+            break
         d=T #per cada iteració fiquem la T del temps anterior
 
     punts=np.linspace(0.0002,0.0198,99)   

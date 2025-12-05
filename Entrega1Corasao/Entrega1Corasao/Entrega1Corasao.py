@@ -97,7 +97,7 @@ ani = FuncAnimation(
     frames=len(temps),
     init_func=init,
     blit=True,
-    interval=50   # ms entre frames (canvia-ho per fer-la més ràpida/lenta)
+    interval=50
 )
 
 plt.show()
