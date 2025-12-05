@@ -1,6 +1,8 @@
 # DreamTeamPlus
 DreamTeam + Jan D Man
 
+S'ha d'entrar a Entrega1Corasao -> Entrega1Corasao-> 
+
 S’ha d’instal·lar la llibreria Numpy i Mathplotlib per a poder visualitzar el nostre codi.
 Al Github tenim diversos documents:
 - Enterga definitiva (document on està el codi principal)
