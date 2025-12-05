@@ -73,18 +73,6 @@ def euler_explicit(par):
     plt.show()
 
     temps = np.array(temps)
-    plt.figure(figsize=(8,5)) #Represento el diagrama de calor
-    plt.imshow(temps * T_0, 
-               extent=[0, 0.02, 0, 500], 
-               aspect='auto', 
-               origin='lower', 
-               cmap='hot')
-
-    plt.colorbar(label='Temperatura (°C)')
-    plt.xlabel('Posició (m)')
-    plt.ylabel('Passos de temps')
-    plt.title('Mapa de calor de l’evolució de temperatura')
-    plt.show()
 
     #ANIMACIÓ
     #preparo figura per fer animació
@@ -251,21 +239,6 @@ def crank_nicolson(per_2):
     plt.title('Cranck-Nicolson')
     plt.show()
 
-    temps = np.array(temps)
-
-    plt.figure(figsize=(8,5))
-    plt.imshow(temps * T_0, 
-               extent=[0.0002, 0.0198, 0, int(0.025/DeltaT)], 
-               aspect='auto', 
-               origin='lower', 
-               cmap='hot')
-
-    plt.colorbar(label='Temperatura (°C)')
-    plt.xlabel('Posició (m)')
-    plt.ylabel('Passos de temps')
-    plt.title('Mapa de calor de l’evolució de temperatura')
-    plt.show()
-
     #SOLUCIÓ ANALÍTICA
     Error=[]
 
@@ -278,6 +251,6 @@ def crank_nicolson(per_2):
     plt.title('Error Cranck-Nicolson')
     plt.show()
 
-#euler_explicit(par)
-#euler_implicit(par_1)
+euler_explicit(par)
+euler_implicit(par_1)
 crank_nicolson(per_2)

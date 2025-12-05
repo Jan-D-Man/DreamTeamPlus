@@ -7,7 +7,7 @@
     <StartupFile>grafiques.py</StartupFile>
     <StartupFile>grafiques_cranck_nicol.py</StartupFile>
     <StartupFile>Entrega_definitiva.py</StartupFile>
-    <StartupFile>Entrega_definitiva.py</StartupFile>
+    <StartupFile>Animació.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

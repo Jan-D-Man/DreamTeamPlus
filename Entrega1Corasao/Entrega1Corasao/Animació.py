@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 from matplotlib.animation import FuncAnimation
+import matplotlib.ticker as ticker
+from matplotlib.ticker import ScalarFormatter
 
 
 K=0.56
@@ -106,5 +108,15 @@ ani2 = FuncAnimation(
     interval=1,   # més ràpid
     blit=False
 )
+
+class CustomScalarFormatter(ScalarFormatter):
+    def _set_format(self):
+        self.format = "%0.2f"
+
+formatter = CustomScalarFormatter(useMathText=True)
+formatter.set_powerlimits((0, 0))
+formatter.set_scientific(True)
+
+ax2.xaxis.set_major_formatter(formatter)
 
 plt.show()
