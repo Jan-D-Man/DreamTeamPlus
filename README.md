@@ -1,5 +1,3 @@
-# DreamTeamPlus
-DreamTeam + Jan D Man
 
 S’ha d’instal·lar la llibreria Numpy i Mathplotlib per a poder visualitzar el nostre codi.
 
